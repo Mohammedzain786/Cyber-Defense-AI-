@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EHCDRS Dashboard</title>
+</head>
+<body>
+    <h1>🚀 Cyber Defense System</h1>
+
+    <form id="uploadForm">
+        <input type="file" id="fileInput" />
+        <button type="submit">Analyze</button>
+    </form>
+
+    <h2>Result:</h2>
+    <pre id="result"></pre>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+
+            const file = document.getElementById('fileInput').files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const res = await fetch("/analyze", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await res.json();
+            document.getElementById("result").innerText =
+                JSON.stringify(data, null, 2);
+        };
+    </script>
+</body>
+</html>
